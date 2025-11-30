@@ -1,4 +1,4 @@
-FROM python:3.11
+FROM pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime
 
 ARG HOME=/root
 ENV HOME=$HOME
