@@ -11,7 +11,10 @@ ENV UV_INSTALL_DIR=/root/.local/bin
 ENV PATH="${UV_INSTALL_DIR}:${PATH}"
 RUN mkdir -p $NANOCHAT_BASE_DIR
 
-RUN apk add --no-cache curl
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      curl \
+      ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 RUN uv venv
 RUN uv sync --extra gpu
