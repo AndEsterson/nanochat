@@ -1,0 +1,13 @@
+---
+name: Image
+
+on:
+  push:
+    tags: ["*"]
+
+jobs:
+  publish-nanochat:
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/.github/workflows/publish-image.yml

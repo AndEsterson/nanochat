@@ -1,0 +1,56 @@
+---
+name: Build and publish image
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: false
+        type: string
+        description: Name of the image to push. Defaults to andesterson/<repo-name>
+      target:
+        required: false
+        type: string
+        description: Docker image target. See https://docs.docker.com/build/building/multi-stage/
+      context:
+        required: false
+        type: string
+        description: Path containing Dockerfile to build. Defaults to repo root
+        default: "."
+
+env:
+  REGISTRY: ghcr.io
+  DEFAULT_IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Free additional disk space
+        run: rm -rf /opt/hostedtoolcache
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to the container registry
+        uses: docker/login-action@v3.0.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract tags and labels for Docker
+        id: meta
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: ${{ env.REGISTRY }}/${{ inputs.name != '' && inputs.name || env.DEFAULT_IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5.0.0
+        with:
+          context: ${{ inputs.context }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          target: ${{ inputs.target }}
