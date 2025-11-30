@@ -18,6 +18,10 @@ on:
         description: Path containing Dockerfile to build. Defaults to repo root
         default: "."
 
+permissions:
+  contents: read
+  packages: write
+
 env:
   REGISTRY: ghcr.io
   DEFAULT_IMAGE_NAME: ${{ github.repository }}
