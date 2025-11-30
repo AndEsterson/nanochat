@@ -24,7 +24,7 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  DEFAULT_IMAGE_NAME: ${{ github.repository }}
+  DEFAULT_IMAGE_NAME: ${{ github.repository_owner }}/$(basename ${{ github.repository }})
 
 jobs:
   build-and-push-image:
