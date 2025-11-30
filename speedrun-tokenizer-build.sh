@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 source .venv/bin/activate
 source "$HOME/.cargo/env"
