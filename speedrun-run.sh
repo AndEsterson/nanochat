@@ -30,9 +30,6 @@ python -m scripts.tok_eval
 echo "Waiting for dataset download to complete..."
 wait $DATASET_DOWNLOAD_PID
 
-# Number of processes/GPUs to use
-NPROC_PER_NODE=8
-
 WANDB_RUN="dummy"
 
 # pretrain the d20 model
