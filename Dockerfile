@@ -14,6 +14,7 @@ RUN mkdir -p $NANOCHAT_BASE_DIR
 RUN apt-get update && apt-get install -y --no-install-recommends \
       curl \
       ca-certificates \
+      build-essential \
     && rm -rf /var/lib/apt/lists/*
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 RUN uv venv
