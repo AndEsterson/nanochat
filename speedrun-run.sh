@@ -47,7 +47,7 @@ torchrun -m scripts.base_eval
 curl -L -o $NANOCHAT_BASE_DIR/identity_conversations.jsonl https://karpathy-public.s3.us-west-2.amazonaws.com/identity_conversations.jsonl
 
 # run midtraining and eval the model
-torchrun -m scripts.mid_train -- --run=$WANDB_RUN
+torchrun -m scripts.mid_train -- --run=$WANDB_RUN --total_batch_size=$FINAL_TOTAL_BATCH_SIZE
 torchrun -m scripts.chat_eval -- -i mid
 
 # -----------------------------------------------------------------------------
