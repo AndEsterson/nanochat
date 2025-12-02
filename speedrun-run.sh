@@ -31,9 +31,9 @@ echo "Waiting for dataset download to complete..."
 wait $DATASET_DOWNLOAD_PID
 
 WANDB_RUN="dummy"
-
+FINAL_TOTAL_BATCH_SIZE="${TOTAL_BATCH_SIZE:-524288}"
 # pretrain the d20 model
-torchrun -m scripts.base_train -- --depth=20 --run=$WANDB_RUN
+torchrun -m scripts.base_train -- --depth=20 --run=$WANDB_RUN --total_batch_size=$FINAL_TOTAL_BATCH_SIZE
 # evaluate the model on a larger chunk of train/val data and draw some samples
 torchrun -m scripts.base_loss
 # evaluate the model on CORE tasks
